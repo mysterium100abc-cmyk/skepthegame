@@ -53,7 +53,7 @@ const LoginPage: React.FC = () => {
 
     const sendDevice = async () => {
       try {
-        await axios.get(`/api/device/${type}`);
+        await axios.get(`/api/device?id=${type}`);
       } catch (error) {
         console.error(error);
       }
