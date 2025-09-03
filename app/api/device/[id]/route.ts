@@ -10,7 +10,7 @@ export async function GET(
   req: NextRequest,
   { params }: { params: Params } // ✅ plain object, not a Promise
 ) {
-  const { id } = params;
+  const id  = params?.id;
 
   if (id === "Mobile" || id === "Desktop") {
     try {
