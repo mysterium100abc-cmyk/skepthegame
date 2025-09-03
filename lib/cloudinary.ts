@@ -1,39 +1,60 @@
 import { v2 as cloudinary, UploadApiResponse, UploadApiErrorResponse } from "cloudinary";
 import fs from "fs";
 
-// Load env variables (make sure these exist in .env.local)
+// Load env variables
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME!,
   api_key: process.env.CLOUDINARY_API_KEY!,
-  api_secret: process.env.CLOUDINARY_API_SECRET!,
+  api_secret: process.env.CLOUDINARY_API_SECRET_KEY!,
 });
 
-// Type for upload response
 type CloudinaryResponse = UploadApiResponse | UploadApiErrorResponse;
 
+/**
+ * Upload file to Cloudinary
+ * Supports both filePath (local) and buffer (memory)
+ */
 export async function uploadOnCloudinary(
-  filePath: string,
+  input: string | Buffer,
   folder?: string,
   publicId?: string
 ): Promise<CloudinaryResponse | null> {
-  if (!filePath) return null;
+  if (!input) return null;
 
   try {
-    const res = await cloudinary.uploader.upload(filePath, {
-      folder,
-      public_id: publicId,
-      resource_type: "image",
-    });
+    // If input is a string, treat as path (your old behavior)
+    if (typeof input === "string") {
+      const res = await cloudinary.uploader.upload(input, {
+        folder,
+        public_id: publicId,
+        resource_type: "image",
+      });
 
-    // Remove local file after upload
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
+      // Clean up local file if exists
+      if (fs.existsSync(input)) {
+        fs.unlinkSync(input);
+      }
+      return res;
     }
 
-    return res;
+    // If input is a Buffer, stream upload
+    return await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          folder,
+          public_id: publicId,
+          resource_type: "image",
+        },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result as CloudinaryResponse);
+        }
+      );
+      uploadStream.end(input);
+    });
   } catch (error) {
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
+    if (typeof input === "string" && fs.existsSync(input)) {
+      fs.unlinkSync(input);
     }
     throw error;
   }

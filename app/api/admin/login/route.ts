@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     }
 
     // 4️⃣ Find the first admin
-    const user = await Admin.findOne().select("+password");
+    const user = await Admin.findOne({ username: admin }).select("+password");
     if (!user) {
       return NextResponse.json(
         { success: false, message: "Admin not found!" },
