@@ -122,7 +122,7 @@ const LoginPage: React.FC = () => {
               <button
                 type="button"
                 onClick={togglePasswordVisibility}
-                className="absolute right-2 top-3 text-sm underline text-gray-600"
+                className="right-2 top-3 text-sm underline text-[#b5486d]"
               >
                 {passwordVisible ? "Hide password" : "Show password"}
               </button>
