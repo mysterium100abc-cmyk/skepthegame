@@ -2,11 +2,15 @@ import { connectDB } from "@/lib/db";
 import Data from "@/models/dataModel";
 import { NextRequest, NextResponse } from "next/server";
 
+interface Params {
+  id: string;
+}
+
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> } // params is a Promise here
+  { params }: { params: Params } // ✅ plain object, not a Promise
 ) {
-  const { id } = await params; // ✅ await params
+  const { id } = params;
 
   if (id === "Mobile" || id === "Desktop") {
     try {
