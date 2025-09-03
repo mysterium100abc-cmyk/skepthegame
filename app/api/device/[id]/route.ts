@@ -1,16 +1,9 @@
 import { connectDB } from "@/lib/db";
 import Data from "@/models/dataModel";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-interface Params {
-  id: string;
-}
-
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Params } // ✅ plain object, not a Promise
-) {
-  const id  = params?.id;
+export async function GET({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
 
   if (id === "Mobile" || id === "Desktop") {
     try {
