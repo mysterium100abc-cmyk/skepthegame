@@ -2,19 +2,15 @@ import { connectDB } from "@/lib/db";
 import Data from "@/models/dataModel";
 import { NextRequest, NextResponse } from "next/server";
 
-
-
-// Handle GET or POST (you can choose which fits better)
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> } // params is a Promise here
 ) {
-  const { id } = await  params;
+  const { id } = await params; // ✅ await params
 
   if (id === "Mobile" || id === "Desktop") {
     try {
       await connectDB();
-
 
       const totalData = await Data.countDocuments({});
       if (totalData === 0) {
@@ -30,12 +26,11 @@ export async function GET(
         success: true,
         message: "Page loaded successfully.",
       });
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
-      return NextResponse.json(
-        { success: false, message: "Server error..!" },
-        { status: 500 }
-      );
+      const message =
+        error instanceof Error ? error.message : "Server error..!";
+      return NextResponse.json({ success: false, message }, { status: 500 });
     }
   }
 
