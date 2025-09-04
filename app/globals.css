@@ -18,7 +18,20 @@
     --foreground: #ededed;
   }
 }
+::-webkit-scrollbar {
+  width: 1px;
+  height: 6px;
+}
 
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--foreground);
+  border-radius: 10px;
+  border: 2px solid var(--background);
+}
 body {
   background: var(--background);
   color: var(--foreground);

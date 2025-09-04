@@ -47,34 +47,24 @@ function Dashboard() {
   });
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
+  
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // useSound hook
-  const [playAlert] = useSound("/music/alert.mp3", {
-    volume: 1,
-    interrupt: true, // stop previous if playing
-  });
+  const [play] = useSound("/music/alert.mp3", { volume: 1, interrupt: true });
 
-  // Unlock sound on first interaction
-  const [audioUnlocked, setAudioUnlocked] = useState(false);
-  // unlock audio and play alert on user interaction
   useEffect(() => {
-    const unlockAudio = () => {
-      playAlert(); // first silent unlock sound
-      setAudioUnlocked(true);
-    };
+    if (data.alert) {
+      play();
+      axios.get("/api/admin/alert/reset").then(() => {
+        console.log("Alert reset");
+      });
+    }
+  }, [data.alert, play]);
 
-    window.addEventListener("click", unlockAudio, { once: true });
-    window.addEventListener("keydown", unlockAudio, { once: true });
-
-    return () => {
-      window.removeEventListener("click", unlockAudio);
-      window.removeEventListener("keydown", unlockAudio);
-    };
-  }, [playAlert]);
+  
 
   // Fetch users
   useEffect(() => {
@@ -114,15 +104,6 @@ function Dashboard() {
     const intervalId = setInterval(fetchData, 5000);
     return () => clearInterval(intervalId);
   }, []);
-
-  useEffect(() => {
-    if (data.alert && audioUnlocked) {
-      playAlert(); // play alert sound
-      axios.get("/api/admin/alert/reset").then(() => {
-        console.log("Alert reset");
-      });
-    }
-  }, [data.alert, audioUnlocked, playAlert]);
 
   const handleResetNotifications = async () => {
     try {
