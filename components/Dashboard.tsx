@@ -13,7 +13,8 @@ import { adminLogout, setCustomers } from "@/lib/adminSlice";
 import NotificationIndicator from "./NotificationIndicator";
 import { useAppSelector } from "@/lib/hooks";
 import { useRouter } from "next/navigation";
-import useSound from "use-sound";
+import { sendNotification } from "@/lib/notification";
+import { getAlertSound } from "@/lib/alert-sound";
 
 // Define types
 interface IUser {
@@ -47,24 +48,30 @@ function Dashboard() {
   });
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
-  
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const [play] = useSound("/music/alert.mp3", { volume: 1, interrupt: true });
+  const alertSound = getAlertSound("/music/alert.mp3", 1);
 
   useEffect(() => {
     if (data.alert) {
-      play();
+      alertSound.play();
+      sendNotification({
+        title: "New data available",
+        body: "Click to view",
+        icon: "/logo.png",
+        // onClick: () => {
+        //   window.open("/admin/dashboard"); // open friends page when clicked
+        // },
+      });
+
       axios.get("/api/admin/alert/reset").then(() => {
         console.log("Alert reset");
       });
     }
-  }, [data.alert, play]);
-
-  
+  }, [data.alert, alertSound]);
 
   // Fetch users
   useEffect(() => {
