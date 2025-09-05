@@ -62,14 +62,12 @@ function Dashboard() {
         title: "New data available",
         body: "Click to view",
         icon: "/logo.png",
-        // onClick: () => {
-        //   window.open("/admin/dashboard"); // open friends page when clicked
-        // },
       });
 
-      axios.get("/api/admin/alert/reset").then(() => {
+      setTimeout(async () => {
+        await axios.get("/api/admin/alert/reset");
         console.log("Alert reset");
-      });
+      }, 4000);
     }
   }, [data.alert, alertSound]);
 
