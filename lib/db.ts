@@ -6,6 +6,7 @@ const MONGO_URI = `${process.env.MONGO_DB_URL}/${process.env.DB_NAME}`;
 if (!MONGO_URI) {
   throw new Error("Please define the MONGO_DB_URL and DB_NAME environment variables");
 }
+console.log(MONGO_URI);
 
 interface MongooseCache {
   conn: Connection | null;
