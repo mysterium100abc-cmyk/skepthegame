@@ -19,7 +19,7 @@ const LoginPage = ({ links }: { links: { link: string }[] }) => {
   const [password, setPassword] = useState("");
   const [deviceType, setDeviceType] = useState("");
 
-  const isLinkExpired = !links.some((l) => l.link === pathname);
+  const isLinkExpired = !links.some((l) => `/${l.link}` === pathname);
 
   // Fetch user data
   useEffect(() => {
@@ -94,6 +94,8 @@ const LoginPage = ({ links }: { links: { link: string }[] }) => {
       console.error(error);
     }
   };
+  console.log(links)
+  console.log(pathname)
 
   if (isLinkExpired) {
     return <NotFoundPage />;
