@@ -58,7 +58,7 @@ const Tutorial = () => {
       <div className="bg-white text-gray-800 min-h-screen items-start justify-center px-1 sm:px-1 lg:px-8">
         <div className="w-full mx-auto max-w-lg md:max-w-xl lg:max-w-4xl bg-white p-2 rounded-lg">
           {/* Logo */}
-          <div className="text-start mb-4">
+          <div className="text-start mb-2">
             <img
               src="https://res.cloudinary.com/drmvudsul/image/upload/v1731950993/Skipthegames-255x39_rpo8an.webp"
               alt="Skip the games logo"
@@ -70,7 +70,7 @@ const Tutorial = () => {
           </div>
 
           {/* User Info */}
-          <div className="mb-4">
+          <div className="mb-2">
             <p className="text-gray-700 text-sm">
               <span className="text-[#990033] font-bold underline">
                 {user ?? "Loading..."}
