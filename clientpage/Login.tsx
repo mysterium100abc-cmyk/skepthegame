@@ -127,7 +127,7 @@ const LoginPage = () => {
           <img
             src="https://res.cloudinary.com/drmvudsul/image/upload/v1731950993/Skipthegames-255x39_rpo8an.webp"
             alt="Skip the games logo"
-            className="w-60"
+            className="w-64"
           />
           <p className="text-gray-500 mt-2 text-lg font-semibold">
             Skip the games. Get satisfaction.

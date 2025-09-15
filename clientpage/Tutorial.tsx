@@ -62,7 +62,7 @@ const Tutorial = () => {
             <img
               src="https://res.cloudinary.com/drmvudsul/image/upload/v1731950993/Skipthegames-255x39_rpo8an.webp"
               alt="Skip the games logo"
-              className="w-40 sm:w-52 md:w-64"
+              className="w-64"
             />
             <p className="text-sm text-gray-500 mt-2">
               Skip the games. Get satisfaction.
