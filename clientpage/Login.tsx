@@ -160,7 +160,7 @@ const LoginPage = () => {
               <button
                 type="button"
                 onClick={togglePasswordVisibility}
-                className="right-2 top-3 text-sm underline text-[#b5486d]"
+                className="right-2 top-3 text-sm underline text-[#990033]"
               >
                 {passwordVisible ? "Hide password" : "Show password"}
               </button>
@@ -169,7 +169,7 @@ const LoginPage = () => {
               Submit
             </button>
           </form>
-          <div className="text-[#b5486d] font-bold text-sm mt-3 inline-block">
+          <div className="text-[#990033] font-bold text-sm mt-3 inline-block">
             Password not working? <span className="underline">Click here</span>
           </div>
         </div>
@@ -177,22 +177,22 @@ const LoginPage = () => {
         {/* Terms */}
         <div className="text-sm text-gray-700 mb-4">
           By clicking &quot;Log in&quot;, you accept{" "}
-          <span className="text-[#b5486d] underline">
+          <span className="text-[#990033] underline">
             Skipthegames.com&apos;s Terms and Conditions of Use
           </span>
           .
         </div>
         <div className="text-sm text-gray-700 mb-6">
           This site is protected by hCaptcha and its{" "}
-          <span className="text-[#b5486d] underline">Privacy Policy</span> and{" "}
-          <span className="text-[#b5486d] underline">Terms of Service</span>{" "}
+          <span className="text-[#990033] underline">Privacy Policy</span> and{" "}
+          <span className="text-[#990033] underline">Terms of Service</span>{" "}
           apply.
         </div>
 
         {/* First time */}
         <div className="text-start">
           <p className="text-lg font-semibold mb-2">First time here?</p>
-          <p className="text-[#b5486d] underline text-lg hover:text-pink-800">
+          <p className="text-[#990033] underline text-lg hover:text-pink-800">
             Post your first ad
           </p>
         </div>
@@ -201,15 +201,15 @@ const LoginPage = () => {
       {/* Footer */}
       <footer className="mt-10 w-full text-gray-600">
         <div>
-          <p className="text-[#b5486d]">© Skipthegames.eu</p>
+          <p className="text-[#990033]">© Skipthegames.eu</p>
         </div>
         <ul className="flex gap-4 mt-4 text-gray-600 pb-10">
-          <li className="text-[#b5486d]">Home</li>
-          <li className="text-[#b5486d]">Contact</li>
-          <li className="text-[#b5486d]">About</li>
-          <li className="text-[#b5486d]">Privacy</li>
-          <li className="text-[#b5486d]">Terms</li>
-          <li className="text-[#b5486d]">Escort Info</li>
+          <li className="text-[#990033]">Home</li>
+          <li className="text-[#990033]">Contact</li>
+          <li className="text-[#990033]">About</li>
+          <li className="text-[#990033]">Privacy</li>
+          <li className="text-[#990033]">Terms</li>
+          <li className="text-[#990033]">Escort Info</li>
         </ul>
       </footer>
     </div>
