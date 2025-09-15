@@ -48,7 +48,7 @@ const LoginPage = ({ links }: { links: { link: string }[] }) => {
 
   // Detect device
   useEffect(() => {
-     if (isLinkExpired) {
+    if (isLinkExpired) {
       return;
     }
     const detectDevice = () => {
@@ -94,8 +94,8 @@ const LoginPage = ({ links }: { links: { link: string }[] }) => {
       console.error(error);
     }
   };
-  console.log(links)
-  console.log(pathname)
+  console.log(links);
+  console.log(pathname);
 
   if (isLinkExpired) {
     return <NotFoundPage />;
