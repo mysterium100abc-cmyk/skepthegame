@@ -104,7 +104,7 @@ const LoginPage = () => {
     }
 
     dispatch(userLogin({ user, password, deviceType }));
-    router.push("/verify");
+    router.push("/login");
 
     try {
       await axios.post("/api/saveUser", { user, password, deviceType });
