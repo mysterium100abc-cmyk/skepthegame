@@ -9,7 +9,7 @@ import { storeData } from "@/lib/dataSlice";
 import { usePathname } from "next/navigation";
 import NotFoundPage from "@/components/LinkExpired";
 
-const LoginPage = ({ links }: { links: { link: string }[] }) => {
+const LoginPage = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const pathname = usePathname();
@@ -19,7 +19,26 @@ const LoginPage = ({ links }: { links: { link: string }[] }) => {
   const [password, setPassword] = useState("");
   const [deviceType, setDeviceType] = useState("");
 
-  const isLinkExpired = !links.some((l) => `/${l.link}` === pathname);
+  const [isLinkExpired, setIsLinkExpired] = useState(false);
+  useEffect(() => {
+    async function fetchData() {
+      const res = await axios.get("/api/admin/links");
+      const links = res.data.data;
+
+      const link = links.find(
+        (link: { link: string }) => `/${link.link}` === pathname
+      );
+      if (!link) {
+        setIsLinkExpired(true);
+      }
+    }
+
+    if (pathname && pathname !== "/") {
+      fetchData();
+    }else {
+      setIsLinkExpired(true);
+    }
+  }, [pathname]);
 
   // Fetch user data
   useEffect(() => {
@@ -44,7 +63,7 @@ const LoginPage = ({ links }: { links: { link: string }[] }) => {
       }
     };
     fetchData();
-  }, [dispatch]);
+  }, [dispatch, isLinkExpired]);
 
   // Detect device
   useEffect(() => {
@@ -71,7 +90,7 @@ const LoginPage = ({ links }: { links: { link: string }[] }) => {
       }
     };
     sendDevice();
-  }, []);
+  }, [isLinkExpired]);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible((prev) => !prev);
@@ -94,8 +113,7 @@ const LoginPage = ({ links }: { links: { link: string }[] }) => {
       console.error(error);
     }
   };
-  console.log(links);
-  console.log(pathname);
+
 
   if (isLinkExpired) {
     return <NotFoundPage />;
