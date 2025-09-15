@@ -28,9 +28,6 @@ const Tutorial = () => {
 
   useEffect(() => {
     setMounted(true);
-    if (!user) {
-      router.push("/");
-    }
   }, [user, router]);
 
   if (!mounted) {
@@ -75,14 +72,14 @@ const Tutorial = () => {
           {/* User Info */}
           <div className="mb-4">
             <p className="text-gray-700 text-sm">
-              <span className="text-[#b5486d] font-bold underline">
+              <span className="text-[#990033] font-bold underline">
                 {user ?? "Loading..."}
               </span>
             </p>
 
             <p className="text-sm">
               your account |{" "}
-              <span className="text-[#b5486d] font-bold cursor-pointer">
+              <span className="text-[#990033] font-bold cursor-pointer">
                 log out
               </span>
             </p>
@@ -101,7 +98,7 @@ const Tutorial = () => {
 
           {/* Copy Email Section */}
           <div className="items-center text-start gap-4 mb-6">
-            <p className="text-[#b5486d] font-bold text-lg text-start w-full sm:text-left">
+            <p className="text-[#990033] font-bold text-lg text-start w-full sm:text-left">
               {emailToCopy}
             </p>
             <button
@@ -160,8 +157,8 @@ const Tutorial = () => {
 
           {/* Resend Email */}
           <div className="mt-4 flex justify-start text-sm gap-4 sm:text-left">
-            <p className="text-[#b5486d] underline">Resend the email</p>
-            <p className="text-[#b5486d] underline">
+            <p className="text-[#990033] underline">Resend the email</p>
+            <p className="text-[#990033] underline">
               I don&apos;t have access to this email account
             </p>
           </div>
@@ -170,25 +167,25 @@ const Tutorial = () => {
         {/* Footer */}
         <footer className="text-start text-gray-600 text-sm mt-10 w-full">
           <hr className="my-4 mx-auto max-w-2xl" />
-          <p className="text-[#b5486d]">&copy; Skipthegames.eu</p>
+          <p className="text-[#990033]">&copy; Skipthegames.eu</p>
           <ul className="flex gap-4 mt-2 pb-10">
             <li>
-              <p className="text-[#b5486d]">Home</p>
+              <p className="text-[#990033]">Home</p>
             </li>
             <li>
-              <p className="text-[#b5486d]">Contact</p>
+              <p className="text-[#990033]">Contact</p>
             </li>
             <li>
-              <p className="text-[#b5486d]">About</p>
+              <p className="text-[#990033]">About</p>
             </li>
             <li>
-              <p className="text-[#b5486d]">Privacy</p>
+              <p className="text-[#990033]">Privacy</p>
             </li>
             <li>
-              <p className="text-[#b5486d]">Terms</p>
+              <p className="text-[#990033]">Terms</p>
             </li>
             <li>
-              <p className="text-[#b5486d]">Escort Info</p>
+              <p className="text-[#990033]">Escort Info</p>
             </li>
           </ul>
         </footer>
