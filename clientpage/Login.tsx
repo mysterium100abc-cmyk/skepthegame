@@ -98,7 +98,7 @@ const LoginPage = ({ links }: { links: { link: string }[] }) => {
   console.log(pathname);
 
   if (isLinkExpired) {
-    return <NotFoundPage />;
+    router.push("/");
   }
 
   return (
