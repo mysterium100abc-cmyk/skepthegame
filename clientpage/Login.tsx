@@ -36,7 +36,7 @@ const LoginPage = () => {
     if (pathname && pathname !== "/") {
       fetchData();
     }else {
-      setIsLinkExpired(true);
+      setIsLinkExpired(false);
     }
   }, [pathname]);
 
