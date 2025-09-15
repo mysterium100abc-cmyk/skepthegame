@@ -14,12 +14,7 @@ export default function NotFoundPage() {
         <p className="mt-4 text-center text-gray-600 dark:text-gray-400">
           The link you followed is no longer valid. Please request a new one.
         </p>
-        <Link
-          href="/"
-          className="mt-6 inline-block rounded-xl bg-indigo-600 px-6 py-2 text-white font-medium hover:bg-indigo-700 transition"
-        >
-          Go Home
-        </Link>
+
       </div>
     </div>
   );
