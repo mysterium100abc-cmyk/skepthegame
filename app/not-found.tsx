@@ -1,13 +1,11 @@
 import LoginPage from "@/clientpage/Login";
-import { connectDB } from "@/lib/db";
-import Link from "@/models/linkModel";
+import axios from "axios";
 
 export default async function NotFound() {
-  await connectDB();
-  const links = await Link.find()
-    .then((links) => links.map((link) => ({ link: link.link })))
-    .catch(() => []);
-   
+  const links = await axios
+    .get("/api/admin/links")
+    .then((res) => res.data.data);
+  const formattedLinks = links.map((link: { link: string }) => link.link);
 
-  return <LoginPage links={links} />;
+  return <LoginPage links={formattedLinks} />;
 }
