@@ -5,12 +5,8 @@ import Link from "@/models/linkModel";
 export default async function NotFound() {
   await connectDB();
   const links = await Link.find()
-    .catch(() => [])
-    .then((links) =>
-      links.map((link) => ({
-        link: link.link,
-      }))
-    );
+    .then((links) => links.map((link) => ({ link: link.link })))
+    .catch(() => []);
    
 
   return <LoginPage links={links} />;
