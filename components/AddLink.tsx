@@ -53,7 +53,7 @@ function AddLink() {
     if (!confirm("Are you sure you want to delete all links?")) return;
     const loading = toast.loading("Deleting all links...");
     try {
-      const res = await axios.get("/api/admin/delete-link");
+      const res = await axios.post("/api/admin/delete-link", { domain });
       toast.success("All links deleted!", { id: loading });
       setLinks(res.data.data);
     } catch (error: unknown) {

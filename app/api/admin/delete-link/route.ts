@@ -3,11 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db"; // adjust path
 import Link from "@/models/linkModel"; // adjust path
 
-export const GET = async (_req: NextRequest) => {
+export const POST = async (req: NextRequest) => {
   try {
     await connectDB();
+    const body = await req.json();
 
-    await Link.deleteMany();
+    const { domain } = body;
+
+    await Link.deleteMany({ domain });
 
     return NextResponse.json(
       {
