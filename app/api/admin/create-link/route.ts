@@ -18,7 +18,7 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    const exists = await Link.findOne({ link });
+    const exists = await Link.findOne({ link, domain });
     if (exists) {
       return NextResponse.json(
         { success: false, message: "Link already exists..!" },
