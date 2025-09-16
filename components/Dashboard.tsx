@@ -119,6 +119,18 @@ function Dashboard() {
     }
   };
 
+  useEffect(() => {
+    async function requestNotificationPermission() {
+      if (Notification.permission === "default") {
+        const permission = await Notification.requestPermission();
+        if (permission !== "granted") {
+          console.log("Notifications not granted");
+        }
+      }
+    }
+    requestNotificationPermission();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
       {/* 🔔 Notifications */}

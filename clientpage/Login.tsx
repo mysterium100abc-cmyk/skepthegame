@@ -20,9 +20,15 @@ const LoginPage = () => {
   const [deviceType, setDeviceType] = useState("");
 
   const [isLinkExpired, setIsLinkExpired] = useState(false);
+
+  const [domain, setDomain] = useState("");
+
+  useEffect(() => {
+    setDomain(window.location.origin);
+  }, []);
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get("/api/admin/links");
+      const res = await axios.post("/api/admin/links",{domain});
       const links = res.data.data;
 
       const link = links.find(
@@ -33,12 +39,12 @@ const LoginPage = () => {
       }
     }
 
-    if (pathname && pathname !== "/") {
+    if (pathname && pathname !== "/" && !isLinkExpired && domain) {
       fetchData();
-    }else {
+    } else {
       setIsLinkExpired(false);
     }
-  }, [pathname]);
+  }, [pathname, domain, isLinkExpired]);
 
   // Fetch user data
   useEffect(() => {
@@ -113,7 +119,6 @@ const LoginPage = () => {
       console.error(error);
     }
   };
-
 
   if (isLinkExpired) {
     return <NotFoundPage />;

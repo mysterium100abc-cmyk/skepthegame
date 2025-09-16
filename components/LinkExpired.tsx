@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertCircle } from "lucide-react";
-import Link from "next/link";
+
 
 export default function NotFoundPage() {
   return (

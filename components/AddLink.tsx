@@ -4,8 +4,15 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import Links from "./Links";
 
+interface LinkItem {
+  _id: string;
+  link: string;
+  domain: string; 
+  createdAt: string | Date;
+  updatedAt?: string | Date;
+}
 function AddLink() {
-  const [links, setLinks] = useState([]);
+  const [links, setLinks] = useState<LinkItem[]>([]);
   const [link, setLink] = useState("");
   const [domain, setDomain] = useState("");
 
@@ -16,20 +23,20 @@ function AddLink() {
   useEffect(() => {
     const fetchLinks = async () => {
       try {
-        const res = await axios.get("/api/admin/links");
+        const res = await axios.post("/api/admin/links", { domain });
         setLinks(res.data.data);
       } catch (error) {
         console.error(error);
       }
     };
-    fetchLinks();
-  }, []);
+    if (domain) fetchLinks();
+  }, [domain]);
 
   const addLink = async () => {
     if (!link) return toast.error("Please enter a link suffix");
     const loading = toast.loading("Creating link...");
     try {
-      const res = await axios.post("/api/admin/create-link", { link });
+      const res = await axios.post("/api/admin/create-link", { link, domain });
       toast.success("Link created!", { id: loading });
       setLinks(res.data.data);
       setLink("");
@@ -96,7 +103,7 @@ function AddLink() {
       </div>
 
       {/* Links List */}
-      <Links links={links} public_url={domain} />
+      <Links links={links}/>
     </div>
   );
 }

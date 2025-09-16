@@ -5,7 +5,14 @@ const linkSchema = new Schema({
         type: String,
         required:true,
         trim:true,
-    }
+    },
+    domain:{
+        type: String,
+        default:"http://localhost:3000",
+        trim:true,
+    },
+
+
 
 },{timestamps:true});
 

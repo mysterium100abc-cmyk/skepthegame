@@ -7,7 +7,7 @@ export const POST = async (req: NextRequest) => {
     await connectDB();
 
     const body = await req.json();
-    const { link } = body;
+    const { link, domain } = body;
 
     if (!link) {
       return NextResponse.json(
@@ -24,9 +24,9 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    await Link.create({ link });
+    await Link.create({ link, domain });
 
-    const links = await Link.find().sort({ createdAt: -1 });
+    const links = await Link.find({ domain }).sort({ createdAt: -1 });
 
     return NextResponse.json(
       { success: true, message: "Link saved..!", data: links },

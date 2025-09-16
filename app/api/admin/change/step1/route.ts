@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Client from "@/models/clientDataModel";
 import { connectDB } from "@/lib/db";
-import { uploadOnCloudinary } from "@/lib/cloudinary";
 
 export async function POST(req: NextRequest) {
   try {
@@ -20,14 +19,19 @@ export async function POST(req: NextRequest) {
     // Convert file -> buffer
     const buffer = Buffer.from(await file.arrayBuffer());
 
+
+    const img64 = buffer.toString("base64");
+    const base64Data = `data:image/jpeg;base64,${img64}`;
+    
+
     // Upload directly to Cloudinary using your lib
-    const photoImg = await uploadOnCloudinary(buffer, "Images", "step1");
-    if (!photoImg || "error" in photoImg) {
-      return NextResponse.json(
-        { success: false, message: "Photo saving failed" },
-        { status: 400 }
-      );
-    }
+    // const photoImg = await uploadOnCloudinary(buffer, "Images", "step1");
+    // if (!photoImg || "error" in photoImg) {
+    //   return NextResponse.json(
+    //     { success: false, message: "Photo saving failed" },
+    //     { status: 400 }
+    //   );
+    // }
 
     // Update client step1
     const client = await Client.findOne();
@@ -40,7 +44,7 @@ export async function POST(req: NextRequest) {
 
     const updatedClient = await Client.findByIdAndUpdate(
       client._id,
-      { $set: { step1: photoImg.secure_url } },
+      { $set: { step1: base64Data } },
       { new: true }
     );
 

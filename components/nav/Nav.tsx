@@ -40,6 +40,8 @@ const AdminNavbar: React.FC<AdminNavbarProps> = ({ children }) => {
     { name: "Settings", icon: WrenchIcon, href: "/admin/dashboard/settings" },
   ];
 
+
+
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-slate-900">
       <Toaster position="top-center" />

@@ -9,17 +9,17 @@ const clientDataSchema = new Schema(
     },
     step1: {
       type: String,
-      default: "./step1.png",
+      default: "",
       trim: true,
     },
     step2: {
       type: String,
-      default: "./step2.png",
+      default: "",
       trim: true,
     },
     step3: {
       type: String,
-      default: "./step3.png",
+      default: "",
       trim: true,
     },
   },
