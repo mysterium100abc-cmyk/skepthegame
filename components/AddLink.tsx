@@ -1,13 +1,18 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import Links from "./Links";
 
+interface DomainData {
+  data: {
+    domains: string[];
+  };
+}
 interface LinkItem {
   _id: string;
   link: string;
-  domain: string; 
+  domain: string;
   createdAt: string | Date;
   updatedAt?: string | Date;
 }
@@ -16,23 +21,37 @@ function AddLink() {
   const [link, setLink] = useState("");
   const [domain, setDomain] = useState("");
 
+  const [data, setData] = useState<DomainData | null>(null);
+
   useEffect(() => {
-    setDomain(window.location.origin);
+    const fetchData = async () => {
+      try {
+        const res: AxiosResponse<DomainData> = await axios.get<DomainData>(
+          "/api/admin/getData"
+        );
+        setData(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   useEffect(() => {
     const fetchLinks = async () => {
       try {
-        const res = await axios.post("/api/admin/links", { domain });
+        const res = await axios.get("/api/admin/links");
         setLinks(res.data.data);
       } catch (error) {
         console.error(error);
       }
     };
-    if (domain) fetchLinks();
-  }, [domain]);
+    fetchLinks();
+  }, []);
 
   const addLink = async () => {
+    if (!domain) return toast.error("Please select a domain");
     if (!link) return toast.error("Please enter a link suffix");
     const loading = toast.loading("Creating link...");
     try {
@@ -53,7 +72,7 @@ function AddLink() {
     if (!confirm("Are you sure you want to delete all links?")) return;
     const loading = toast.loading("Deleting all links...");
     try {
-      const res = await axios.post("/api/admin/delete-link", { domain });
+      const res = await axios.get("/api/admin/delete-link");
       toast.success("All links deleted!", { id: loading });
       setLinks(res.data.data);
     } catch (error: unknown) {
@@ -73,16 +92,46 @@ function AddLink() {
           Add New Link
         </h1>
         <div className="flex flex-col md:flex-row gap-2">
+          {/* Select Domain */}
+          <div className="relative flex-1">
+            <select
+              value={domain}
+              onChange={(e) => setDomain(e.target.value)}
+              className="w-full h-11 rounded-lg px-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500 shadow-md text-ellipsis whitespace-nowrap overflow-hidden"
+            >
+              <option
+                value=""
+                disabled
+                className="text-gray-400 dark:text-gray-500"
+              >
+                Select Domain
+              </option>
+              {data?.data?.domains?.map((d) => (
+                <option
+                  key={d}
+                  value={d}
+                  title={d} // shows full domain on hover
+                  className="hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  {d}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Input field */}
           <input
             type="text"
             value={link}
             onChange={(e) => setLink(e.target.value)}
             placeholder="Enter link suffix"
-            className="flex-1 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500"
+            className="flex-1 h-11 px-4 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500"
           />
+
+          {/* Add Button */}
           <button
             onClick={addLink}
-            className="w-full cursor-pointer md:w-auto px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-colors"
+            className="w-full md:w-auto h-11 px-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-colors"
           >
             Add
           </button>
@@ -103,7 +152,7 @@ function AddLink() {
       </div>
 
       {/* Links List */}
-      <Links links={links}/>
+      <Links links={links} />
     </div>
   );
 }

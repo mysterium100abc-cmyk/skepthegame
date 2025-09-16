@@ -12,7 +12,10 @@ import {
   LinkIcon,
   UserIcon,
   WrenchIcon,
+  GlobeAltIcon
+  
 } from "@heroicons/react/24/solid";
+
 
 import DarkMode from "@/components/DarkMode";
 import { Toaster } from "react-hot-toast";
@@ -36,6 +39,7 @@ const AdminNavbar: React.FC<AdminNavbarProps> = ({ children }) => {
   const navItems = [
     // { name: "Dashboard", icon: ChartBarIcon, href: "/admin/dashboard" },
     { name: "Links", icon: LinkIcon, href: "/admin/dashboard/links" },
+    { name: "Domains", icon: GlobeAltIcon, href: "/admin/dashboard/domains" },
     { name: "Profile", icon: UserIcon, href: "/admin/dashboard/profile" },
     { name: "Settings", icon: WrenchIcon, href: "/admin/dashboard/settings" },
   ];
@@ -144,7 +148,7 @@ const AdminNavbar: React.FC<AdminNavbarProps> = ({ children }) => {
       )}
 
       {/* Main content */}
-      <div className="flex-grow ml-0 md:ml-64 pt-16 md:pt-0 w-full">
+      <div key="content" className="flex-grow ml-0 md:ml-64 pt-16 md:pt-0 w-full dark:bg-gray-900 dark:text-gray-200 text-black bg-white">
         {children}
       </div>
     </div>

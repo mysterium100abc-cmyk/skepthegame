@@ -2,11 +2,14 @@ import { connectDB } from "@/lib/db";
 import AdminData from "@/models/dataModel";
 import { NextRequest, NextResponse } from "next/server";
 
-
 export async function GET(req: NextRequest) {
-    await connectDB();
+  await connectDB();
   try {
-    const data = await AdminData.findOne();
+    let data = await AdminData.findOne();
+
+    if (!data) {
+      data = await AdminData.create({});
+    }
 
     return NextResponse.json(
       {

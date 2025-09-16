@@ -27,6 +27,11 @@ const dataSchema = new Schema(
       default: false,
       trim: true,
     },
+    domains: {
+      type: Array,
+      default: ["http://localhost:3000"],
+      trim: true,
+    },
   },
   { timestamps: true }
 );

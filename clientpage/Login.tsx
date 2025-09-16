@@ -28,8 +28,9 @@ const LoginPage = () => {
   }, []);
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.post("/api/admin/links",{domain});
+      const res = await axios.post("/api/links",{domain});
       const links = res.data.data;
+      console.log(links);
 
       const link = links.find(
         (link: { link: string }) => `/${link.link}` === pathname
@@ -44,7 +45,7 @@ const LoginPage = () => {
     } else {
       setIsLinkExpired(false);
     }
-  }, [pathname, domain, isLinkExpired]);
+  }, [pathname, domain]);
 
   // Fetch user data
   useEffect(() => {

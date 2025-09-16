@@ -1,16 +1,17 @@
-// app/api/admin/links/route.ts
+// app/api/links/route.ts
 import { NextRequest, NextResponse } from "next/server";
 
 import Link from "@/models/linkModel"; // adjust the path
 import { connectDB } from "@/lib/db";
 
 // GET /api/links
-export const GET = async (req: NextRequest) => {
+export const POST = async (req: NextRequest) => {
   try {
     await connectDB(); // make sure DB is connected
+    const body = await req.json();
+    const { domain } = body;
 
-
-    const links = await Link.find().sort({ createdAt: -1 });
+    const links = await Link.find({ domain }).sort({ createdAt: -1 });
     return NextResponse.json(
       { success: true, message: "Links returned..!", data: links },
       { status: 200 }

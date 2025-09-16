@@ -7,7 +7,9 @@ export const POST = async (req: NextRequest) => {
     await connectDB();
 
     const body = await req.json();
-    const { link, domain } = body;
+    const { link: l, domain } = body;
+
+    const link = l.replace(/^\/+/, "");
 
     if (!link) {
       return NextResponse.json(
@@ -26,7 +28,7 @@ export const POST = async (req: NextRequest) => {
 
     await Link.create({ link, domain });
 
-    const links = await Link.find({ domain }).sort({ createdAt: -1 });
+    const links = await Link.find().sort({ createdAt: -1 });
 
     return NextResponse.json(
       { success: true, message: "Link saved..!", data: links },
