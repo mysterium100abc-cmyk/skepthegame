@@ -40,7 +40,7 @@ function MailList() {
   }, []);
 
   // Filter emails based on search and provider
-  const filteredMails = mails.filter((mail) => {
+  const filteredMails = mails?.filter((mail) => {
     const matchesSearch = mail.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          mail.name?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesProvider = selectedProvider === "all" || mail.provider === selectedProvider;
@@ -48,7 +48,7 @@ function MailList() {
   });
 
   // Get unique providers for filter
-  const providers = [...new Set(mails.map(mail => mail.provider).filter(Boolean))];
+  const providers = [...new Set(mails?.map(mail => mail.provider).filter(Boolean))];
 
   // Format date
   const formatDate = (dateString?: string) => {
@@ -89,7 +89,7 @@ function MailList() {
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Accounts</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">{mails.length}</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">{mails?.length}</p>
               </div>
             </div>
           </div>
@@ -103,7 +103,7 @@ function MailList() {
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Active</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">{mails.filter(m => m.refreshToken).length}</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">{mails?.filter(m => m.refreshToken).length}</p>
               </div>
             </div>
           </div>
@@ -132,7 +132,7 @@ function MailList() {
               <div>
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Latest</p>
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {mails.length > 0 ? formatDate(mails[0]?.createdAt) : 'N/A'}
+                  {mails?.length > 0 ? formatDate(mails[0]?.createdAt) : 'N/A'}
                 </p>
               </div>
             </div>
@@ -207,7 +207,7 @@ function MailList() {
 
         {/* Email List */}
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-          {filteredMails.map((mail) => (
+          {filteredMails?.map((mail) => (
             <div
               key={mail._id}
               onClick={() => handleEmailClick(mail.email)}
@@ -275,7 +275,7 @@ function MailList() {
         </div>
 
         {/* Empty State */}
-        {!loading && filteredMails.length === 0 && mails.length > 0 && (
+        {!loading && filteredMails?.length === 0 && mails?.length > 0 && (
           <div className="text-center py-12">
             <div className="max-w-md mx-auto">
               <svg className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -291,7 +291,7 @@ function MailList() {
           </div>
         )}
 
-        {!loading && mails.length === 0 && !error && (
+        {!loading && mails?.length === 0 && !error && (
           <div className="text-center py-12">
             <div className="max-w-md mx-auto">
               <svg className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
