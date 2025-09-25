@@ -198,7 +198,7 @@ function Dashboard() {
           />
           <div className="ml-3">
             <h1 className="font-bold text-lg md:text-xl">Auth Visitors</h1>
-            <p className="font-bold">{data.mobileClicks + data.visitors}</p>
+            <p className="font-bold">{data.visitors}</p>
           </div>
         </div>
       </div>
